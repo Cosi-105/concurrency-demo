@@ -1,7 +1,7 @@
 POOL_SIZE = 10
 
 class SimplePool
-  def run(count)
+  def run(loadtype, scale, count)
     jobs = Queue.new
     count.times{|i| jobs.push i}
 
@@ -9,12 +9,7 @@ class SimplePool
       Thread.new do
         begin      
           while x = jobs.pop(true)
-            Mailer.deliver do 
-              from    "eki_#{x}@eqbalq.com"
-              to      "jill_#{x}@example.com"
-              subject "Threading and Forking (#{x})"
-              body    "Some content"
-            end        
+            Worker.new.run(loadtype, scale)
           end
         rescue ThreadError
         end

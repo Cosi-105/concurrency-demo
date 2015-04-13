@@ -1,62 +1,51 @@
+require 'benchmark'
+#require 'pry-byebug'
+
 require_relative 'mailer'
 require_relative 'simple_pool'
 require_relative 'forking'
 require_relative 'sync'
 require_relative 'threading'
-require 'benchmark'
+require_relative 'cell'
+require_relative 'worker'
 
-count = 200
+class MultiRun
+  attr_reader :mode, :loadtype, :scale, :count
 
-# Call the fake mailer <count> times, once after the other
-def sync_test(count)
-  count.times do |i|
-    Mailer.deliver do
-      from    "eki_#{i}@eqbalq.com"
-      to      "jill_#{i}@example.com"
-      subject "Threading and Forking (#{i})"
-      body    "Some content"
+  def get_args
+    if ARGV.length != 4
+      puts "args: mode, loadtype, scale, count"
+      puts "  modes: s(ync), f(ork), t(hread), c(celluloid), p(ool)"
+      puts "  loadtype: fib, mem"
+      puts "  scale: number between 1-10"
+      puts "  count: number of iterations"
+      exit(0)
     end
+
+    @mode = ARGV[0]
+    @loadtype = ARGV[1]
+    @scale = ARGV[2].to_i
+    @count = ARGV[3].to_i
+  end
+
+  def run_benchmarks
+    puts
+    puts "[Running: mode: #{mode}, loadtype: #{loadtype}, scale: #{scale}, count: #{count}]"
+    puts
+
+    Benchmark.bm(14) do |x|
+      x.report("sync")        { Sync.new.run(loadtype,scale,count).cleanup } if mode.include? "s" 
+      x.report("fork")        { Forking.new.run(loadtype,scale,count).cleanup } if mode.include? "f" 
+      x.report("thread")      { Threading.new.run(loadtype,scale,count).cleanup } if mode.include? "t" 
+      x.report("simple pool") { SimplePool.new.run(loadtype,scale,count).cleanup } if mode.include? "p" 
+      x.report("celluloid")   { Cell.new.run(loadtype,scale,count).cleanup } if mode.include? "c" 
+    end
+
+    puts
+    puts "[End]"
   end
 end
 
-# Call the fake mailer <count> times, in a forked process
-def fork_test(count)
-  count.times do |i|
-    fork do     
-      Mailer.deliver do 
-        from    "eki_#{i}@eqbalq.com"
-        to      "jill_#{i}@example.com"
-        subject "Threading and Forking (#{i})"
-        body    "Some content"
-      end
-    end
-  end
-end
-
-# Call the fake mailer count times, in a thread
-def thread_test(count)
-  @threads = []
-  count.times do |i|
-    @threads << Thread.new do     
-      Mailer.deliver do 
-        from    "eki_#{i}@eqbalq.com"
-        to      "jill_#{i}@example.com"
-        subject "Threading and Forking (#{i})"
-        body    "Some content"
-      end
-    end
-  end
-end
-
-
-Benchmark.bm(14) do |x|
-  x.report("sync")        { Sync.new.run(count).cleanup }
-  x.report("old sync")    { sync_test(count) }
-  x.report("fork")        { Forking.new.run(count).cleanup }
-  x.report("old fork")    { fork_test(count); Process.waitall }
-  x.report("thread")      { Threading.new.run(count).cleanup }
-  x.report("old thread")  { thread_test(count); @threads.map { |t| t.join} }
-  x.report("simple pool") { SimplePool.new.run(count).cleanup }
-end
-
-puts "\n\nEnd"
+mr = MultiRun.new
+mr.get_args
+mr.run_benchmarks

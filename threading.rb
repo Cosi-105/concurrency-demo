@@ -1,15 +1,10 @@
-# Call the fake mailer count times, in a thread
+# Call the loadtype of scale count times, in a thread
 class Threading
-  def run(count)
+  def run(loadtype, scale, count)
     @threads = []
     count.times do |i|
-      @threads << Thread.new do     
-        Mailer.deliver do 
-          from    "eki_#{i}@eqbalq.com"
-          to      "jill_#{i}@example.com"
-          subject "Threading and Forking (#{i})"
-          body    "Some content"
-        end
+      @threads << Thread.new do
+        Worker.new.run(loadtype, scale)
       end
     end
     self
