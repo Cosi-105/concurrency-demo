@@ -1,24 +1,25 @@
 @balance = 0
+count = 10000
 t1 = Thread.start do
-  100.times do 
+  count.times do 
     @balance = @balance + 100
   end
-  puts "[t1] Balance is $#{@balance}      (after adding $100x100)\n"
-  100.times do
+  puts "[t1] Balance is $#{@balance}      (after adding $100 x #{count})\n"
+  count.times do
     @balance = @balance - 100
   end
-  puts "[t1] Balance is $#{@balance}     (after subtracting $100x100)\n"
+  puts "[t1] Balance is $#{@balance}     (after subtracting $100 x #{count})\n"
 end
 
 t2 = Thread.start do
-  100.times do 
+  count.times do 
     @balance = @balance + 100
   end
-  puts "[t2] Balance is $#{@balance}       (after adding $100x100)\n"
-  100.times do
+  puts "[t2] Balance is $#{@balance}       (after adding $100 x #{count})\n"
+  count.times do
     @balance = @balance - 100
   end
-  puts "[t1] Balance is $#{@balance}      (after subtracting $100x100)\n"
+  puts "[t1] Balance is $#{@balance}      (after subtracting $100 x #{count})\n"
 end
 
 t1.join
