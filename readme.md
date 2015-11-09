@@ -1,3 +1,8 @@
+#### Concurrency case studies
+
+This code demonstrates different concurrency techniques, and gives you a way to do some
+experiments. You can also use it to look at how different approaches are coded up.
+
 #### Performance Figures
 
 * Running on a Mac Air 4 Core

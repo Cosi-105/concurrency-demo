@@ -1,5 +1,4 @@
 require 'benchmark'
-#require 'pry-byebug'
 
 require_relative 'mailer'
 require_relative 'simple_pool'
@@ -34,11 +33,11 @@ class MultiRun
     puts
 
     Benchmark.bm(14) do |x|
-      x.report("sync")        { Sync.new.run(loadtype,scale,count).cleanup } if mode.include? "s" 
-      x.report("fork")        { Forking.new.run(loadtype,scale,count).cleanup } if mode.include? "f" 
-      x.report("thread")      { Threading.new.run(loadtype,scale,count).cleanup } if mode.include? "t" 
-      x.report("simple pool") { SimplePool.new.run(loadtype,scale,count).cleanup } if mode.include? "p" 
-      x.report("celluloid")   { Cell.new.run(loadtype,scale,count).cleanup } if mode.include? "c" 
+      x.report("sync")        { Sync.new.run(loadtype,scale,count).cleanup } if mode.include? "s"
+      x.report("fork")        { Forking.new.run(loadtype,scale,count).cleanup } if mode.include? "f"
+      x.report("thread")      { Threading.new.run(loadtype,scale,count).cleanup } if mode.include? "t"
+      x.report("simple pool") { SimplePool.new.run(loadtype,scale,count).cleanup } if mode.include? "p"
+      x.report("celluloid")   { Cell.new.run(loadtype,scale,count).cleanup } if mode.include? "c"
     end
 
     puts
