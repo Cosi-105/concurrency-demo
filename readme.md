@@ -1,13 +1,34 @@
-#### Concurrency case studies
+### Concurrency case studies
 
 This code demonstrates different concurrency techniques, and gives you a way to do some
 experiments. You can also use it to look at how different approaches are coded up.
+
+#### Running
+
+`$ ruby multi_run.rb [mode] [loadtype] [scale] [iterations]`
+
+* mode (Choose one or more, by initials)
+  * s(ynchronous)
+  * f(ork)
+  * t(hread),
+  * c(celluloid)
+  * p(ool)
+
+  * loadtype
+    * fib: cpu bound fibonacci series
+    * mem: memory allocator
+
+  * scale
+    * Positive number given to the loadtype to increase it's load
+
+  * iterations
+    * how many times to run the test
 
 #### Performance Figures
 
 * Running on a Mac Air 4 Core
 
-##### JRuby
+###### JRuby
 ~~~~
 concurrency-demo(master)> ruby multi_run.rb stpc fib 35 50
 
@@ -33,7 +54,7 @@ celluloid       22.050000   0.380000  22.430000 ( 15.561000)
 
 [End]
 ~~~~
-#### MRI 2.1.5
+##### MRI 2.1.5
 ~~~~
 concurrency-demo(master)> ruby multi_run.rb fstpc fib 35 50
 
