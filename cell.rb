@@ -1,8 +1,6 @@
 require 'celluloid'
 require 'logger'
 
-# Celluloid.logger.level = Logger::ERROR
-
 class MailWorker
   include Celluloid
 

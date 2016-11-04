@@ -1,36 +1,27 @@
-class Counter
-  attr_accessor :counter, :half_count
-
-  def initialize
-    @counter = 0
-    @half_count = 0
+require 'json'
+class Account
+  def self.get_balance
+    @balance
   end
 
-  def count
-    @counter += 1
+  def self.set_balance(n)
+    @balance = n
   end
 end
 
-c = Counter.new
+Account.set_balance(0)
 
-t1 = Thread.start do
-  1000000.times do
-    c.count
-    c.half_count += 1 if c.counter.even?
+threads = (1..20).map do |i|
+  Thread.new(i) do
+    5.times do
+      sleep(0.1)
+      Account.set_balance(Account.get_balance + 100)
+      sleep(0.1)
+      Account.set_balance(Account.get_balance - 100)
+    end
   end
 end
 
-t2 = Thread.start do
-  1000000.times do
-    c.counter
-    c.half_count += 1 if c.counter.even?
-  end
-end
-
-t1.join
-t2.join
-
-puts
-puts "count() method was called (should be 200,000):              #{c.counter}"
-puts "Value of half_count, should be counter/2:                   #{c.half_count}"
-puts
+puts threads.to_json
+threads.each { |t| t.join}
+puts "Final Balance = #{Account.get_balance}"

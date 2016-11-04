@@ -10,7 +10,7 @@ threads = (1..10).map do |i|
     curr_balance += 10
     sleep(rand(0..2))
     Account.balance = curr_balance
-    # puts "Account.balance=#{Account.balance}, curr_balance=#{curr_balance}"
+    puts "Account.balance=#{Account.balance}, curr_balance=#{curr_balance}"
   end
 end
 

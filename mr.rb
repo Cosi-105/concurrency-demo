@@ -29,7 +29,7 @@ class MultiRun
 
   def run_benchmarks
     puts
-    puts "[Running: mode: #{mode}, loadtype: #{loadtype}, scale: #{scale}, count: #{count}]"
+    puts "[Running on ruby: #{RUBY_VERSION} with mode: #{mode}, loadtype: #{loadtype}, scale: #{scale}, count: #{count} ]"
     puts
 
     Benchmark.bm(14) do |x|

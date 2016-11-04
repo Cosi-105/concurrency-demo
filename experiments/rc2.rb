@@ -29,9 +29,5 @@ end
 t1.join
 t2.join
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 5af667da3516eb6509e6fc0df4d3e4aca87fa450
 puts "\n\n*** Final Balance should be zero!"
 puts "\n*** Actual Balance is $#{@balance}\n\n"

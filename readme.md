@@ -8,7 +8,7 @@ experiments. You can also use it to look at how different approaches are coded u
 
 #### Running
 
-`$ ruby multi_run.rb [mode] [loadtype] [scale] [iterations]`
+`$ ruby mr.rb [mode] [loadtype] [scale] [iterations]`
 
 * mode (Choose one or more, by initials)
   * s(ynchronous)
@@ -33,7 +33,7 @@ experiments. You can also use it to look at how different approaches are coded u
 
 ###### JRuby
 ~~~~
-concurrency-demo(master)> ruby multi_run.rb stpc fib 35 50
+concurrency-demo(master)> ruby mr.rb stpc fib 35 50
 
 [Running: mode: stpc, loadtype: fib, scale: 35, count: 50]
 
@@ -45,7 +45,7 @@ celluloid       35.010000   0.140000  35.150000 ( 34.751000)
 
 [End]
 
-concurrency-demo(master)> ruby multi_run.rb stpc mem 20 50
+concurrency-demo(master)> ruby mr.rb stpc mem 20 50
 
 [Running: mode: stpc, loadtype: mem, scale: 20, count: 50]
 
@@ -59,7 +59,7 @@ celluloid       22.050000   0.380000  22.430000 ( 15.561000)
 ~~~~
 ##### MRI 2.1.5
 ~~~~
-concurrency-demo(master)> ruby multi_run.rb fstpc fib 35 50
+concurrency-demo(master)> ruby mr.rb fstpc fib 35 50
 
 [Running: mode: fstpc, loadtype: fib, scale: 35, count: 50]
 
@@ -71,7 +71,7 @@ simple pool     80.730000   0.260000  80.990000 ( 81.301132)
 celluloid       75.880000   0.250000  76.130000 ( 76.563826)
 
 [End]
-concurrency-demo(master)> ruby multi_run.rb fstpc mem 20 50
+concurrency-demo(master)> ruby mr.rb fstpc mem 20 50
 
 [Running: mode: fstpc, loadtype: mem, scale: 20, count: 50]
 
