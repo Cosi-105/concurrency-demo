@@ -3,6 +3,9 @@
 This code demonstrates different concurrency techniques, and gives you a way to do some
 experiments. You can also use it to look at how different approaches are coded up.
 
+#### Requires
+* Celluloid Gem
+
 #### Running
 
 `$ ruby multi_run.rb [mode] [loadtype] [scale] [iterations]`

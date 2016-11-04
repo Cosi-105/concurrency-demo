@@ -11,7 +11,7 @@ require_relative 'worker'
 class MultiRun
   attr_reader :mode, :loadtype, :scale, :count
 
-  def get_args
+  def parse_args
     if ARGV.length != 4
       puts "args: mode, loadtype, scale, count"
       puts "  modes: s(ync), f(ork), t(hread), c(celluloid), p(ool)"
@@ -33,11 +33,11 @@ class MultiRun
     puts
 
     Benchmark.bm(14) do |x|
-      x.report("sync")        { Sync.new.run(loadtype,scale,count).cleanup } if mode.include? "s"
-      x.report("fork")        { Forking.new.run(loadtype,scale,count).cleanup } if mode.include? "f"
-      x.report("thread")      { Threading.new.run(loadtype,scale,count).cleanup } if mode.include? "t"
-      x.report("simple pool") { SimplePool.new.run(loadtype,scale,count).cleanup } if mode.include? "p"
-      x.report("celluloid")   { Cell.new.run(loadtype,scale,count).cleanup } if mode.include? "c"
+      x.report("sync")        { Sync.new.run(loadtype, scale, count).cleanup } if mode.include? "s"
+      x.report("fork")        { Forking.new.run(loadtype, scale, count).cleanup } if mode.include? "f"
+      x.report("thread")      { Threading.new.run(loadtype, scale, count).cleanup } if mode.include? "t"
+      x.report("simple pool") { SimplePool.new.run(loadtype, scale, count).cleanup } if mode.include? "p"
+      x.report("celluloid")   { Cell.new.run(loadtype, scale, count).cleanup } if mode.include? "c"
     end
 
     puts
@@ -46,5 +46,5 @@ class MultiRun
 end
 
 mr = MultiRun.new
-mr.get_args
+mr.parse_args
 mr.run_benchmarks
