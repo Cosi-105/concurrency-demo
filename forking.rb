@@ -1,7 +1,7 @@
 # Call the fake mailer <count> times, in a forked process
 class Forking
   def run(loadtype, scale, count)
-    count.times do |i|
+    count.times do
       fork do
         Worker.new.run(loadtype, scale)
       end
@@ -10,6 +10,6 @@ class Forking
   end
 
   def cleanup
-    Process.waitall 
+    Process.waitall
   end
 end

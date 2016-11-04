@@ -1,5 +1,4 @@
 class Mailer
-
   def self.deliver(&block)
     mail = MailBuilder.new(&block).mail
     mail.send_mail
@@ -15,7 +14,7 @@ class Mailer
     end
 
     def fib(n)
-      n < 2 ? n : fib(n-1) + fib(n-2)
+      n < 2 ? n : fib(n - 1) + fib(n - 2)
     end
   end
 
@@ -26,7 +25,6 @@ class Mailer
       @mail = Mail.new
       instance_eval(&block)
     end
-    
 
     %w(from to subject body).each do |m|
       define_method(m) do |val|

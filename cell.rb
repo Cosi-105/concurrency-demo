@@ -1,7 +1,7 @@
 require 'celluloid'
 require 'logger'
 
-Celluloid.logger.level = Logger::ERROR
+# Celluloid.logger.level = Logger::ERROR
 
 class MailWorker
   include Celluloid
@@ -15,7 +15,7 @@ class Cell
   def run(loadtype, scale, count)
     mailer_pool = MailWorker.pool(size: 10)
 
-    count.times do |i|
+    count.times do
       mailer_pool.run(loadtype, scale)
     end
     self
