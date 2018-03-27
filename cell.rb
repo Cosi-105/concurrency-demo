@@ -1,4 +1,4 @@
-require 'celluloid'
+require 'celluloid/current'
 require 'logger'
 
 class MailWorker

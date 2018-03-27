@@ -1,5 +1,5 @@
 @balance = 0
-count = 100
+count = 10000
 t1 = Thread.start do
   count.times do
     @balance = @balance + 100
